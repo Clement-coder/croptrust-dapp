@@ -79,7 +79,7 @@ contract Escrow {
     ) external onlyArbiter {
         TransactionDetails storage transaction = transactions[_transactionId];
         require(!transaction.isReleased, "Funds already released");
-        require(transaction.amount > transaction.amount, "Insufficient funds");
+        require(transaction.amount > 0, "Insufficient funds");
 
         transaction.isReleased = true;
         bool success = IERC20(transaction.token).transfer(
