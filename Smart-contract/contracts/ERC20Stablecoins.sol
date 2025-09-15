@@ -3,8 +3,8 @@ pragma solidity ^0.8.26;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract Escrow {
-    address private escrowAddress; // address of human or contract to trigger transfer
+contract ERC20Stablecoins {
+    address private escrowAddress; 
 
     address public USDT;
     address public USDC;
