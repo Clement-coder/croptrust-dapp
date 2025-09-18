@@ -1,0 +1,90 @@
+@keyframes float-1 {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-20px); 
+  }
+}
+
+@keyframes float-2 {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-15px); 
+  }
+}
+
+@keyframes float-3 {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-25px); 
+  }
+}
+
+@keyframes spin-slow {
+  from { 
+    transform: rotate(0deg); 
+  }
+  to { 
+    transform: rotate(360deg); 
+  }
+}
+
+@keyframes spin-reverse {
+  from { 
+    transform: rotate(360deg); 
+  }
+  to { 
+    transform: rotate(0deg); 
+  }
+}
+
+@keyframes bounce-right {
+  0%, 100% { 
+    transform: translateX(0px); 
+  }
+  50% { 
+    transform: translateX(5px); 
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { 
+    opacity: 0.5; 
+  }
+  50% { 
+    opacity: 0.8; 
+  }
+}
+
+.animateFloat1 {
+  animation: float-1 6s ease-in-out infinite;
+}
+
+.animateFloat2 {
+  animation: float-2 8s ease-in-out infinite;
+}
+
+.animateFloat3 {
+  animation: float-3 7s ease-in-out infinite;
+}
+
+.animateSpinSlow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animateSpinReverse {
+  animation: spin-reverse 15s linear infinite;
+}
+
+.animateBounceRight {
+  animation: bounce-right 2s ease-in-out infinite;
+}
+
+.animatePulseSlow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
