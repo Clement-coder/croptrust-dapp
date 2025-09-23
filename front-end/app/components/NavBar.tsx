@@ -126,7 +126,7 @@ const Navbar: React.FC = () => {
 
             {/* Mobile Web3 Button */}
             <div className="flex justify-center mt-4">
-              < />
+              
             </div>
           </div>
         </div>
