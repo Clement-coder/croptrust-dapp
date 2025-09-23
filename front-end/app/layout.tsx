@@ -1,26 +1,30 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import NavBar from "./components/NavBar";
-import { Web3Provider } from "./components/providers/Web3Provider";
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
+
+const inter = Inter({ subsets: ['latin'] })
+
+import { headers } from 'next/headers' // added
+import ContextProvider from '@/context'
 
 export const metadata: Metadata = {
-  title: "CropTrust",
-  description: "Web3 Marketplace for agriculture 🌱",
-};
+  title: 'CropTrust',
+  description: 'Powered by Reown'
+}
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+  children
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+
+  const cookies = headers().get('cookie')
+
   return (
     <html lang="en">
-      <body>
-        <Web3Provider>
-          <NavBar />
-          {children}
-        </Web3Provider>
+      <body className={inter.className}>
+        <ContextProvider cookies={cookies}>{children}</ContextProvider>
       </body>
     </html>
-  );
+  )
 }
