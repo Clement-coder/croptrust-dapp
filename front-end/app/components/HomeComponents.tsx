@@ -2,8 +2,12 @@
 'use client';
 
 import { ArrowLeftRight, User, MessageSquare, Heart, Clock, ArrowRight, Star, Twitter, Send, Linkedin, Sparkles, TrendingUp, Shield, Zap, Upload, Search, Lock, CheckCircle, Users, DollarSign, Leaf, Smartphone, Globe, Award, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
+import React, { useState } from "react";
+import Link from 'next/link';
 
 const HomeComponents = () => {
+
+
   return (
     <div className="relative">
       {/* Custom CSS for animations */}
@@ -375,16 +379,31 @@ const HomeComponents = () => {
 
           {/* Enhanced CTA Section */}
           <div className="flex flex-col items-center mt-20 animate-slide-up" style={{animationDelay: '0.4s'}}>
-            <div className="relative group cursor-pointer">
-              <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-300 group-hover:scale-110">
-                <ArrowRight className="w-8 h-8 text-white group-hover:translate-x-1 transition-transform" />
-              </div>
-              
-              <div className="absolute inset-0 border-2 border-green-300 rounded-full animate-spin opacity-30 group-hover:opacity-60 transition-opacity" style={{animation: 'spin 8s linear infinite'}}></div>
-              <div className="absolute inset-2 border-2 border-green-400 rounded-full opacity-20 group-hover:opacity-40 transition-opacity" style={{animation: 'spin 6s linear infinite reverse'}}></div>
-              <div className="absolute -inset-2 border border-green-200 rounded-full animate-ping opacity-20"></div>
-            </div>
-            
+   <Link href="/Role-Selection">
+      <div className="relative group cursor-pointer w-24 h-24">
+        {/* Main Button */}
+        <div className="w-full h-full bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-xl transition-all duration-300 transform group-hover:scale-110 group-hover:shadow-2xl">
+          <span className="text-white text-xl">
+            <ArrowRight/>
+          </span>
+        </div>
+
+        {/* Outer spinning border */}
+        <div
+          className="absolute inset-0 rounded-full border-2 border-green-300 opacity-30 transition-opacity group-hover:opacity-60"
+          style={{ animation: "spin 8s linear infinite" }}
+        ></div>
+
+        {/* Inner reverse spinning border */}
+        <div
+          className="absolute inset-2 rounded-full border-2 border-green-400 opacity-20 transition-opacity group-hover:opacity-40"
+          style={{ animation: "spin 6s linear infinite reverse" }}
+        ></div>
+
+        {/* Ping effect */}
+        <div className="absolute -inset-2 rounded-full border border-green-200 opacity-20 animate-ping"></div>
+      </div>
+    </Link>
             <p className="text-gray-600 mt-6 text-center max-w-md">
               Join thousands of farmers already earning fair prices through our secure Web3 marketplace
             </p>
