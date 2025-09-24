@@ -30,7 +30,7 @@ export default function RoleSelection({ onClose }: { onClose: () => void }) {
   };
 
   return (
-    <div className="absolute inset-0 z-50 w-full h-screen flex items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       {/* Modal Container */}
       <div
         className={`relative z-10 bg-gradient-to-br from-white/95 to-gray-100/90 backdrop-blur-xl border-2 border-green-200/50 shadow-2xl shadow-green-500/20 rounded-3xl p-10 md:p-14 w-[90%] max-w-lg mx-4 transform transition-all duration-500 ease-out ${

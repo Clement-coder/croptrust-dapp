@@ -5,7 +5,7 @@ import { Menu, X, Home, Info, ShoppingCart, Phone, ExternalLink } from "lucide-r
 import { useAccount } from "wagmi";
 
 const navLinks = [
-  { name: "Home", href: "#home", icon: <Home className="w-5 h-5" /> },
+  { name: "Home", href: "/", icon: <Home className="w-5 h-5" /> },
   { name: "About", href: "#about", icon: <Info className="w-5 h-5" /> },
   { name: "Marketplace", href: "#marketplace", icon: <ShoppingCart className="w-5 h-5" /> },
   { name: "Contact", href: "#contact", icon: <Phone className="w-5 h-5" /> },
@@ -77,8 +77,8 @@ const Navbar: React.FC = () => {
               : "bg-green-500/10 border border-green-200/20"
           }`}
         >
-          <ExternalLink className="w-4 h-4 text-green-300" />
-          <span className={`text-sm font-medium transition-colors duration-300 ${scrolled ? "text-green-100" : "text-white"}`}>
+          <ExternalLink className={`w-4 h-4 ${scrolled ? "text-green-800" : "text-white"}`} />
+          <span className={`text-sm font-medium transition-colors duration-300 ${scrolled ? "text-green-800" : "text-white"}`}>
             Web3 Powered
           </span>
         </div>
@@ -100,12 +100,12 @@ const Navbar: React.FC = () => {
           isMenuOpen ? "max-h-screen opacity-100 mt-4" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-6 space-y-4">
+        <div className={`backdrop-blur-sm border border-white/20 rounded-2xl p-6 space-y-4 ${scrolled ? "bg-white/20" : "bg-white/10"}`}>
           {navLinks.map((link, index) => (
             <a
               key={link.name}
               href={link.href}
-              className="flex items-center gap-2 font-medium py-2 border-b last:border-b-0 text-white animate-slide-in-mobile cursor-pointer"
+              className={`flex items-center gap-2 font-medium py-2 border-b last:border-b-0 animate-slide-in-mobile cursor-pointer ${scrolled ? "text-gray-800" : "text-white"}`}
               style={{ animationDelay: `${index * 50}ms` }}
               onClick={() => setIsMenuOpen(false)}
             >
@@ -121,8 +121,8 @@ const Navbar: React.FC = () => {
                 : "bg-green-500/10 border border-green-200/20"
             }`}
           >
-            <ExternalLink className="w-4 h-4 text-green-300" />
-            <span className={`text-sm font-medium transition-colors duration-300 ${scrolled ? "text-green-100" : "text-white"}`}>
+            <ExternalLink className={`w-4 h-4 ${scrolled ? "text-green-800" : "text-white"}`} />
+            <span className={`text-sm font-medium transition-colors duration-300 ${scrolled ? "text-green-800" : "text-white"}`}>
               Web3 Powered
             </span>
           </div>

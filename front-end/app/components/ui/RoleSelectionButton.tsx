@@ -11,33 +11,27 @@ export default function RoleSelectionButton() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="relative group cursor-pointer w-32 h-32"
+        className="relative group cursor-pointer"
       >
         {/* Main Button */}
-        <div className="w-full h-full bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex flex-col items-center justify-center shadow-xl transition-all duration-300 transform group-hover:scale-110 group-hover:shadow-2xl">
-          <span className="text-white text-sm md:text-base font-bold tracking-wide mb-1">
-            GET STARTED
-          </span>
+        <div className="w-full px-10 py-4 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center gap-3 text-white font-bold tracking-wide shadow-xl transition-all duration-300 transform group-hover:scale-105 group-hover:shadow-2xl">
+          GET STARTED
           {/* Animated Arrow */}
-          <ArrowRight
-            className="w-6 h-6 text-white animate-bounce-x mt-1"
-          />
+          <ArrowRight className="w-6 h-6 text-white animate-bounce" />
         </div>
 
-        {/* Outer spinning border */}
+        {/* Outer border */}
         <div
-          className="absolute inset-0 rounded-full border-2 border-green-300 opacity-30 transition-opacity group-hover:opacity-60"
-          style={{ animation: "spin 8s linear infinite" }}
+          className="absolute inset-0 rounded-xl border-2 border-green-300 opacity-30 transition-opacity group-hover:opacity-60"
         ></div>
 
-        {/* Inner reverse spinning border */}
+        {/* Inner border */}
         <div
-          className="absolute inset-2 rounded-full border-2 border-green-400 opacity-20 transition-opacity group-hover:opacity-40"
-          style={{ animation: "spin 6s linear infinite reverse" }}
+          className="absolute inset-1 rounded-xl border-2 border-green-400 opacity-20 transition-opacity group-hover:opacity-40"
         ></div>
 
-        {/* Ping effect */}
-        <div className="absolute -inset-2 rounded-full border border-green-200 opacity-20 animate-ping"></div>
+        {/* Ping glow effect */}
+        <div className="absolute inset-0 rounded-xl border border-green-200 opacity-20 animate-ping"></div>
       </button>
 
       {open && <RoleSelection onClose={() => setOpen(false)} />}

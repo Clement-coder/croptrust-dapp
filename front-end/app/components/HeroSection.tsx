@@ -53,6 +53,9 @@ function HeroSection() {
               Farmers get fair prices. Buyers get transparent, fresh produce straight from the source.
             </p>
 
+            <RoleSelectionButton />
+
+
             {/* CTA Style Box */}
             <div className="bg-white/10 backdrop-blur-sm border border-green-300/30 rounded-2xl p-6 shadow-2xl">
               <div className="flex items-center gap-3 mb-4">
@@ -63,8 +66,8 @@ function HeroSection() {
               <div className="flex items-center gap-3 text-green-200">
                 <span>Explore Marketplace</span>
                 <ArrowRight className={`w-5 h-5 ${styles.animateBounceRight}`} />
- <RoleSelectionButton/>
               </div>
+
             </div>
 
             {/* Trust Badges */}
