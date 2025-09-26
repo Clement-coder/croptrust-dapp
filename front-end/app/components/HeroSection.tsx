@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowRight, Shield, DollarSign, Wheat, Star, CheckCircle, ArrowLeftRight, Zap } from 'lucide-react';
 import styles from './HeroSection.module.css';
 import Link from 'next/link';
-import RoleSelectionButton from './ui/RoleSelectionButton';
+import RoleSelectionButton from './registration/RoleSelectionButton';
 
 function HeroSection() {
   return (
