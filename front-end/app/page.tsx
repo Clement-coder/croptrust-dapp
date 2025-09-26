@@ -1,10 +1,10 @@
-import NavBar from "./components/NavBar"
+import Navbar from "./components/NavBar copy"
 import HeroSection from "./components/HeroSection"
 import HomeComponents from "./components/HomeComponents"
 const page = () => {
   return (
     <div>
-      <NavBar/>
+      <Navbar/>
       <HeroSection/>
       <HomeComponents/>
     </div>

@@ -16,7 +16,7 @@ interface BuyerDashboardProps {
 
 export default function BuyerDashboard({ buyer }: BuyerDashboardProps) {
   return (
-    <div className="p-8 text-gray-800">
+    <div className="p-8 mx-auto px-6 text-gray-800">
       <h1 className="text-4xl font-bold mb-8">Buyer Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-1">
