@@ -22,7 +22,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} suppressHydrationWarning={true}>
         <ContextProvider cookies={cookies}>{children}</ContextProvider>
       </body>
     </html>

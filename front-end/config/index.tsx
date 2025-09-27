@@ -6,6 +6,7 @@ import { mainnet, arbitrum } from '@reown/appkit/networks'
 export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
 
 if (!projectId) {
+  console.error("WalletConnect Project ID is not defined. Please set NEXT_PUBLIC_PROJECT_ID in your .env file.");
   throw new Error('Project ID is not defined')
 }
 
