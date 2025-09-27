@@ -3,23 +3,15 @@
 
 import { useParams } from 'next/navigation';
 import CropDetailPage from '@/app/components/ui/CropDetailPage';
+import { crops } from '@/app/components/CropData';
 
 const CropPage = () => {
   const { id } = useParams();
+  const crop = crops.find((crop) => crop.id === id);
 
-  // In a real application, you would fetch the crop data based on the id.
-  // For now, we'll use some placeholder data.
-  const crop = {
-    id: id as string,
-    name: 'Fresh Tomatoes',
-    price: '$2.99 / lb',
-    location: 'California, USA',
-    imageUrl: '/tomatoes.jpg', // Replace with a real image path
-    farmer: {
-      name: 'John Doe',
-      avatarUrl: '/farmer-avatar.png', // Replace with a real image path
-    },
-  };
+  if (!crop) {
+    return <div>Crop not found</div>;
+  }
 
   return (
     <div className="container mx-auto py-8">
