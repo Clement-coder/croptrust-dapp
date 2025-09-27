@@ -4,6 +4,8 @@
 import { ArrowLeftRight, User, MessageSquare, Heart, Clock, ArrowRight, Star, Twitter, Send, Linkedin, Sparkles, TrendingUp, Shield, Zap, Upload, Search, Lock, CheckCircle, Users, DollarSign, Leaf, Smartphone, Globe, Award, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
 import React, { useState } from "react";
 import Link from 'next/link';
+import CropCard from './ui/CropCard';
+import { crops } from './CropData';
 
 const HomeComponents = () => {
 
@@ -412,6 +414,26 @@ const HomeComponents = () => {
               Start Trading Now
               <Sparkles className="w-4 h-4 inline-block ml-2 group-hover:animate-bounce" />
             </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Featured Crops Section */}
+      <section id="featured-crops" className="py-20 bg-white">
+        <div className="container mx-auto px-6">
+          <div className="text-center mb-16 animate-slide-up">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Featured Crops
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover the freshest produce from our trusted farmers.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {crops.map((crop) => (
+              <CropCard key={crop.id} crop={crop} />
+            ))}
           </div>
         </div>
       </section>

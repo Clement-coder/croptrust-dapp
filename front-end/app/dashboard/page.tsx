@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import DashboardNavBar from "../components/DashboardNavBar";
-import { FarmerDashboard } from "../components/dashboard/FarmerDashboard";
-import { BuyerDashboard } from "../components/dashboard/BuyerDashboard";
+import  FarmerDashboard  from "../components/dashboard/FarmerDashboard";
+import BuyerDashboard from "../components/dashboard/BuyerDashboard";
 
 export default function Dashboard() {
   const [userRole, setUserRole] = useState<string | null>(null);
