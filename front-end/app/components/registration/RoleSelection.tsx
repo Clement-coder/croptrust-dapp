@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { X, ArrowLeft, Wheat, ShoppingCart } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { useRouter as useNextRouter } from 'next/navigation';
+import { X, ArrowLeft, Wheat, ShoppingCart, User, Building, MapPin, Wallet } from 'lucide-react';
 
 interface FarmerFormType {
   fullName: string;
@@ -40,7 +40,7 @@ const FloatingParticles = () => {
 
 // System Status Component
 const SystemStatus = () => {
-  const [statusColor, setStatusColor] = useState('bg-green-400');
+  const [statusColor, setStatusColor] = React.useState('bg-green-400');
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -66,14 +66,14 @@ interface FuturisticRoleModalProps {
 
 
 export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProps) {
-  const router = useRouter();
-  const [isVisible, setIsVisible] = useState(false);
-  const [selectedRole, setSelectedRole] = useState<"farmer" | "buyer" | null>(null);
-  const [shakeFields, setShakeFields] = useState<string[]>([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useNextRouter();
+  const [isVisible, setIsVisible] = React.useState(false);
+  const [selectedRole, setSelectedRole] = React.useState<"farmer" | "buyer" | null>(null);
+  const [shakeFields, setShakeFields] = React.useState<string[]>([]);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   // Farmer Form State
-  const [farmerForm, setFarmerForm] = useState<FarmerFormType>({
+  const [farmerForm, setFarmerForm] = React.useState<FarmerFormType>({
     fullName: "",
     farmName: "",
     cropType: "",
@@ -82,7 +82,7 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
   });
 
   // Buyer Form State
-  const [buyerForm, setBuyerForm] = useState<BuyerFormType>({
+  const [buyerForm, setBuyerForm] = React.useState<BuyerFormType>({
     fullName: "",
     companyName: "",
     location: "",
@@ -92,6 +92,10 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
   // Animate modal in
   useEffect(() => {
     setIsVisible(true);
+    document.body.style.overflow = 'hidden'; // Prevent scrolling on body
+    return () => {
+      document.body.style.overflow = 'unset'; // Re-enable scrolling on body
+    };
   }, []);
 
   const handleClose = () => {
@@ -117,18 +121,25 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
     key: string,
     value: string,
     onChange: (value: string) => void,
-    placeholder: string
+    placeholder: string,
+    IconComponent?: React.ElementType // Add IconComponent prop
   ) => {
     const hasError = shakeFields.includes(key);
     
     return (
       <div className="relative group">
+        {IconComponent && (
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-cyan-500 transition-colors duration-300">
+            <IconComponent className="w-5 h-5" />
+          </div>
+        )}
         <input
           name={key}
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           className={`w-full p-4 bg-white/80 backdrop-blur-sm rounded-xl border-2 
+            ${IconComponent ? 'pl-12' : ''} // Add left padding if icon exists
             ${hasError 
               ? 'border-red-500 shadow-lg shadow-red-500/30 animate-pulse' 
               : 'border-gray-300 focus:border-cyan-400'
@@ -152,9 +163,20 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
   // Form Validation & Submit
   const validateAndSubmit = async (form: any, type: "farmer" | "buyer") => {
     const emptyFields = Object.keys(form).filter((key) => !form[key]);
+    const fieldsToShake: string[] = [...emptyFields];
+
+    const isValidWalletAddress = (address: string) => {
+      // Basic Ethereum address validation: starts with 0x and followed by 40 hex characters
+      return /^0x[a-fA-F0-9]{40}$/.test(address);
+    };
+
+    // Wallet address validation
+    if (form.wallet && !isValidWalletAddress(form.wallet)) {
+      fieldsToShake.push("wallet");
+    }
     
-    if (emptyFields.length > 0) {
-      setShakeFields(emptyFields);
+    if (fieldsToShake.length > 0) {
+      setShakeFields(fieldsToShake);
       setTimeout(() => setShakeFields([]), 600);
       return false;
     }
@@ -172,6 +194,8 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
       localStorage.setItem("farmers", JSON.stringify(existingFarmers));
       setFarmerForm({ fullName: "", farmName: "", cropType: "", location: "", wallet: "" });
       console.log("Farmer registered and saved to localStorage:", newFarmer);
+      localStorage.setItem("currentUserId", newFarmer.id.toString()); // Store current user ID
+      localStorage.setItem("currentUserRole", "farmer"); // Store current user role
     } else {
       const existingBuyers = JSON.parse(localStorage.getItem("buyers") || "[]");
       const newBuyer = { ...form, id: Date.now(), registrationDate: new Date().toISOString() };
@@ -179,6 +203,8 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
       localStorage.setItem("buyers", JSON.stringify(existingBuyers));
       setBuyerForm({ fullName: "", companyName: "", location: "", wallet: "" });
       console.log("Buyer registered and saved to localStorage:", newBuyer);
+      localStorage.setItem("currentUserId", newBuyer.id.toString()); // Store current user ID
+      localStorage.setItem("currentUserRole", "buyer"); // Store current user role
     }
     
     setIsSubmitting(false);
@@ -351,31 +377,36 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
                 "fullName",
                 farmerForm.fullName,
                 (value) => setFarmerForm({ ...farmerForm, fullName: value }),
-                "Full Name"
+                "Full Name",
+                User // Pass User icon
               )}
               {renderInput(
                 "farmName",
                 farmerForm.farmName,
                 (value) => setFarmerForm({ ...farmerForm, farmName: value }),
-                "Farm Name"
+                "Farm Name",
+                Building // Pass Building icon
               )}
               {renderInput(
                 "cropType",
                 farmerForm.cropType,
                 (value) => setFarmerForm({ ...farmerForm, cropType: value }),
-                "Crop Type"
+                "Crop Type",
+                Wheat // Pass Wheat icon
               )}
               {renderInput(
                 "location",
                 farmerForm.location,
                 (value) => setFarmerForm({ ...farmerForm, location: value }),
-                "Location"
+                "Location",
+                MapPin // Pass MapPin icon
               )}
               {renderInput(
                 "wallet",
                 farmerForm.wallet,
                 (value) => setFarmerForm({ ...farmerForm, wallet: value }),
-                "Wallet Address"
+                "Wallet Address",
+                Wallet // Pass Wallet icon
               )}
               
               <button
@@ -419,25 +450,29 @@ export default function FuturisticRoleModal({ onClose }: FuturisticRoleModalProp
                 "fullName",
                 buyerForm.fullName,
                 (value) => setBuyerForm({ ...buyerForm, fullName: value }),
-                "Full Name"
+                "Full Name",
+                User // Pass User icon
               )}
               {renderInput(
                 "companyName",
                 buyerForm.companyName,
                 (value) => setBuyerForm({ ...buyerForm, companyName: value }),
-                "Company Name"
+                "Company Name",
+                Building // Pass Building icon
               )}
               {renderInput(
                 "location",
                 buyerForm.location,
                 (value) => setBuyerForm({ ...buyerForm, location: value }),
-                "Location"
+                "Location",
+                MapPin // Pass MapPin icon
               )}
               {renderInput(
                 "wallet",
                 buyerForm.wallet,
                 (value) => setBuyerForm({ ...buyerForm, wallet: value }),
-                "Wallet Address"
+                "Wallet Address",
+                Wallet // Pass Wallet icon
               )}
               
               <button

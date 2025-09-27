@@ -1,19 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Wheat, X, DollarSign, Package, Image as ImageIcon } from "lucide-react";
 
 interface PostCropModalProps {
   onClose: () => void;
   onCropPosted: (newCrop: any) => void;
+  crop?: any;
 }
 
-export default function PostCropModal({ onClose, onCropPosted }: PostCropModalProps) {
+export default function PostCropModal({ onClose, onCropPosted, crop }: PostCropModalProps) {
   const [cropName, setCropName] = useState("");
   const [quantity, setQuantity] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState<string | null>(null);
   const [shakeFields, setShakeFields] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (crop) {
+      setCropName(crop.name);
+      setQuantity(crop.quantity.toString());
+      setPrice(crop.price.toString());
+      setImage(crop.image || null);
+    }
+  }, [crop]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -39,7 +49,7 @@ export default function PostCropModal({ onClose, onCropPosted }: PostCropModalPr
       return;
     }
 
-    const newCrop = { name: cropName, quantity: parseInt(quantity), price: parseInt(price), image };
+    const newCrop = { ...(crop || {}), name: cropName, quantity: parseInt(quantity), price: parseInt(price), image };
     onCropPosted(newCrop);
     onClose();
   };
@@ -77,7 +87,7 @@ export default function PostCropModal({ onClose, onCropPosted }: PostCropModalPr
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-      <div className="relative p-8 bg-gradient-to-br from-white/95 via-gray-50/90 to-white/95 backdrop-blur-xl border border-white/30 shadow-2xl shadow-green-500/20 rounded-3xl w-[90%] max-w-lg">
+      <div className="relative p-4 sm:p-8 bg-gradient-to-br from-white/95 via-gray-50/90 to-white/95 backdrop-blur-xl border border-white/30 shadow-2xl shadow-green-500/20 rounded-3xl w-[90%] max-w-lg">
         <button onClick={onClose} className="absolute top-4 right-4 p-2 text-gray-500 hover:text-red-600 hover:bg-red-100/50 rounded-full transition-all duration-300 hover:scale-110 hover:rotate-90">
           <X className="w-6 h-6" />
         </button>
@@ -85,12 +95,12 @@ export default function PostCropModal({ onClose, onCropPosted }: PostCropModalPr
           <div className="p-3 bg-green-500/10 rounded-xl border border-green-500/20">
             <Wheat className="w-8 h-8 text-green-500" />
           </div>
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
-            List a New Crop
+          <h2 className="text-2xl sm:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
+            {crop ? "Edit Crop" : "List a New Crop"}
           </h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className={`relative group border-2 rounded-xl ${shakeFields.includes("image") ? "border-red-500 shadow-lg shadow-red-500/30 animate-pulse" : "border-gray-300"}`}>
+          <label className={`relative group border-2 rounded-xl cursor-pointer ${shakeFields.includes("image") ? "border-red-500 shadow-lg shadow-red-500/30 animate-pulse" : "border-gray-300"}`}>
             <input
               type="file"
               accept="image/*"
@@ -107,7 +117,7 @@ export default function PostCropModal({ onClose, onCropPosted }: PostCropModalPr
                 </div>
               )}
             </div>
-          </div>
+          </label>
           {renderInput("cropName", cropName, setCropName, "Crop Name", "text", <Wheat className="w-5 text-gray-600 h-5" />)}
           {renderInput("quantity", quantity, setQuantity, "Quantity (in kg)", "number", <Package className="w-5 text-gray-600 h-5" />)}
           {renderInput("price", price, setPrice, "Price (per kg)", "number", <DollarSign className="w-5 text-gray-600 h-5" />)}
@@ -115,7 +125,7 @@ export default function PostCropModal({ onClose, onCropPosted }: PostCropModalPr
             type="submit"
             className="w-full py-4 mt-6 font-bold text-white rounded-2xl bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-500/30"
           >
-            Post Crop
+            {crop ? "Update Crop" : "Post Crop"}
           </button>
         </form>
       </div>

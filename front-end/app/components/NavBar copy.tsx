@@ -14,8 +14,14 @@ const navLinks = [
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isClient, setIsClient] = useState(false); // New state variable
 
   const { isConnected } = useAccount();
+
+  // Set isClient to true after component mounts
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Scroll effect
   useEffect(() => {
@@ -66,7 +72,7 @@ const Navbar: React.FC = () => {
           ))}
 
           {/* Web3 Connect Button */}
-          {typeof window !== "undefined" && <w3m-button />}
+          {isClient && <w3m-button />} {/* Render only on client */}
         </div>
 
         {/* Web3 Badge for Desktop */}
@@ -128,7 +134,7 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Mobile Web3 Button */}
-          <div className="flex justify-center mt-4">{typeof window !== "undefined" && <w3m-button />}</div>
+          <div className="flex justify-center mt-4">{isClient && <w3m-button />}</div> {/* Render only on client */}
         </div>
       </div>
     </nav>

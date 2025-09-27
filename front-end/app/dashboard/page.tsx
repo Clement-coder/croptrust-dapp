@@ -1,46 +1,50 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import FarmerDashboard from "@/app/components/dashboard/FarmerDashboard";
-import BuyerDashboard from "@/app/components/dashboard/BuyerDashboard";
-import DashboardNavbar from "../components/DashboardNavBar";
+import DashboardNavBar from "../components/DashboardNavBar";
+import { FarmerDashboard } from "../components/dashboard/FarmerDashboard";
+import { BuyerDashboard } from "../components/dashboard/BuyerDashboard";
 
-export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null);
-  const [role, setRole] = useState<"farmer" | "buyer" | null>(null);
+export default function Dashboard() {
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
-    // For now, we'll just get the first farmer or buyer from localStorage.
-    // In a real app, you'd have a proper login system.
-    const farmers = JSON.parse(localStorage.getItem("farmers") || "[]");
-    const buyers = JSON.parse(localStorage.getItem("buyers") || "[]");
+    const storedRole = localStorage.getItem("currentUserRole");
+    const storedId = localStorage.getItem("currentUserId");
 
-    if (farmers.length > 0) {
-      setUser(farmers[0]);
-      setRole("farmer");
-    } else if (buyers.length > 0) {
-      setUser(buyers[0]);
-      setRole("buyer");
+    if (storedRole && storedId) {
+      setUserRole(storedRole);
+      const id = parseInt(storedId);
+
+      if (storedRole === "farmer") {
+        const farmers = JSON.parse(localStorage.getItem("farmers") || "[]");
+        const currentFarmer = farmers.find((f: any) => f.id === id);
+        setUserData(currentFarmer);
+      } else if (storedRole === "buyer") {
+        const buyers = JSON.parse(localStorage.getItem("buyers") || "[]");
+        const currentBuyer = buyers.find((b: any) => b.id === id);
+        setUserData(currentBuyer);
+      }
     }
   }, []);
 
+  if (!userRole || !userData) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        Loading dashboard...
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-gray-100 mx-10 md:mx-24 mt-10 min-h-screen">
-      <DashboardNavbar />
-      <main className="p-8">
-        {user ? (
-          role === "farmer" ? (
-            <FarmerDashboard farmer={user} />
-          ) : (
-            <BuyerDashboard buyer={user} />
-          )
+    <div className="min-h-screen bg-gray-100">
+      <DashboardNavBar />
+      <main className="container mx-auto p-6">
+        {userRole === "farmer" ? (
+          <FarmerDashboard farmer={userData} />
         ) : (
-          <div className="flex items-center justify-center h-[calc(100vh-100px)]">
-            <div className="text-center">
-              <h1 className="text-3xl text-black font-bold">No user data found.</h1>
-              <p className="text-gray-500">Please register as a farmer or buyer.</p>
-            </div>
-          </div>
+          <BuyerDashboard buyer={userData} />
         )}
       </main>
     </div>

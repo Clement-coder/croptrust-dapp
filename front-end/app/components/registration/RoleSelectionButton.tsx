@@ -1,12 +1,17 @@
 'use client'
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import FuturisticRoleModal from "./RoleSelection";
 export default function RoleSelectionButton() {
   const [open, setOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [isClient, setIsClient] = useState(false); // New state variable
+
+  useEffect(() => {
+    setIsClient(true); // Set to true after component mounts
+  }, []);
 
   return (
     <>
@@ -93,7 +98,7 @@ export default function RoleSelectionButton() {
           />
 
           {/* Floating particles */}
-          {[...Array(6)].map((_, i) => (
+          {isClient && [...Array(6)].map((_, i) => (
             <div
               key={i}
               className={`absolute bg-green-400 rounded-full w-2 h-2 transition-all duration-300
@@ -108,7 +113,7 @@ export default function RoleSelectionButton() {
           ))}
 
           {/* Additional particle effects on hover */}
-          {isHovered && (
+          {isClient && isHovered && (
             <div className="absolute inset-0 pointer-events-none">
               {[...Array(8)].map((_, i) => (
                 <div
