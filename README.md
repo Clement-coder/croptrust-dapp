@@ -1,50 +1,71 @@
 # 🌱 CropTrust: A Decentralized Marketplace for Agriculture
 
-CropTrust is a decentralized, blockchain-based marketplace designed to connect farmers directly with buyers, fostering transparency, security, and fairness in the agricultural supply chain. By removing intermediaries, the platform empowers farmers to receive fair prices for their produce while providing buyers with transparent and secure transactions.
+**CropTrust** is a decentralized, blockchain-based marketplace built on **Hedera** that connects farmers directly with buyers, fostering transparency, security, and fairness in the agricultural supply chain.
+By removing intermediaries, CropTrust empowers farmers to earn fair prices for their produce while providing buyers with trusted, verifiable transactions.
 
-## Core Components
+---
 
-The CropTrust ecosystem is built upon a suite of smart contracts that work in concert to create a seamless and trustless environment.
+## 🌾 Core Components
+
+The CropTrust ecosystem is powered by a suite of smart contracts that ensure a seamless, trustless, and transparent experience.
 
 ### 1. Farmer Registry (`FarmerRegistry.sol`)
 
-This contract serves as the digital identity hub for farmers. Key functions include:
-- **Profile Registration**: Farmers can register their profiles with essential information such as name, location, and other relevant metadata.
-- **Crop Listings**: Once registered, farmers can create listings for the crops they wish to sell, specifying details like crop type, quantity, and price.
+This contract acts as the **digital identity hub** for farmers.
+
+**Key functions:**
+
+* **Profile Registration:** Farmers register with essential information such as name, location, and farm details.
+* **Crop Listings:** Registered farmers can create listings for crops they wish to sell, including crop type, quantity, and price.
+
+---
 
 ### 2. Marketplace (`CropTrustMarketplace.sol`)
 
-This contract functions as the central platform where buyers can discover and purchase crop listings from registered farmers. When a buyer initiates a purchase, the marketplace triggers the creation of a secure escrow to protect both parties, rather than sending the payment directly to the farmer.
+The marketplace serves as the **core trading platform** where buyers can discover and purchase crop listings from registered farmers.
+
+When a buyer initiates a purchase, the marketplace creates a **secure escrow** to hold funds until delivery is confirmed.
+
+---
 
 ### 3. Escrow (`CropTrustEscrow.sol`)
 
-The escrow contract is the financial heart of the system, managing payments in a trustless manner.
+The escrow contract is the **financial backbone** of the system, ensuring that payments are handled securely and transparently.
 
-- **Secure Fund Holding**: When a buyer commits to a purchase, their payment is held in the escrow contract.
-- **Payment Method**: The system uses **USDT (Tether)**, a stablecoin pegged to the US Dollar, for all transactions.
-- **Confirmation and Release**: Funds are released to the farmer only after the buyer confirms receipt of the goods.
-- **Dispute Resolution**: In the event of a dispute, a designated arbitrator can intervene to resolve the conflict by either refunding the buyer or releasing the funds to the farmer.
-- **Failsafe Mechanism**: To protect farmers, an auto-release mechanism is implemented. If the buyer does not take any action within a predefined time (e.g., 48 hours), the funds are automatically released to the farmer.
+**Features:**
 
-## How It Works
+* **Secure Fund Holding:** Buyer payments are held safely in escrow.
+* **Stable Payments:** Transactions use **USDT (Tether)** for stability.
+* **Confirmation & Release:** Funds are released to the farmer only when the buyer confirms receipt.
+* **Dispute Resolution:** A designated arbitrator can resolve disputes by refunding the buyer or releasing funds to the farmer.
+* **Failsafe Mechanism:** If no action is taken within a predefined time (e.g., 48 hours), funds are automatically released to the farmer.
 
-1.  **Listing**: A registered farmer lists their crops for sale on the marketplace.
-2.  **Purchase**: A buyer finds the listing and initiates a purchase, depositing USDT into the secure escrow contract.
-3.  **Delivery**: The farmer delivers the crops to the buyer.
-4.  **Confirmation**: The buyer confirms receipt of the goods.
-5.  **Payment Release**: The escrow contract releases the funds to the farmer.
+---
 
-In summary, the CropTrust smart contracts work together to create a more equitable and efficient agricultural market by removing intermediaries, reducing risk, and fostering direct, transparent relationships between farmers and buyers.
+## 🧭 How It Works
 
-## Technology Stack
+1. **Registration:** A user signs up and gains access to their dashboard.
+2. **Role Selection:** From the dashboard, the user can toggle between being a **Farmer** or a **Buyer**.
+3. **Listing (Farmer Mode):** Farmers can list crops for sale with price, quantity, and description.
+4. **Purchase (Buyer Mode):** Buyers browse available crops and initiate purchases, depositing USDT into escrow.
+5. **Delivery & Confirmation:** Farmers deliver the goods; buyers confirm receipt.
+6. **Payment Release:** Escrow releases funds to the farmer.
 
-*   **Frontend**: React, Next.js, TailwindCSS
-*   **Smart Contracts**: Solidity
-*   **Blockchain**: Deployed on Celo, Polygon, or Base
-*   **Storage**: IPFS (for crop images and documentation)
-*   **Payments**: USDT (Tether)
+This structure allows flexibility—users can participate in both roles depending on their needs.
 
-## Installation and Setup
+---
+
+## ⚙️ Technology Stack
+
+* **Frontend:** React, Next.js, TailwindCSS
+* **Smart Contracts:** Solidity
+* **Blockchain:** Hedera Hashgraph
+* **Storage:** IPFS (for crop images and documentation)
+* **Payments:** USDT (Tether, via Hedera Token Service)
+
+---
+
+## 🚀 Installation and Setup
 
 ```bash
 # Clone the repository
@@ -63,9 +84,12 @@ cd ../Smart-contract
 npm install
 
 # Deploy the smart contracts (example with Hardhat)
-npx hardhat run scripts/deploy.js --network your-network
+npx hardhat run scripts/deploy.js --network hedera-testnet
 ```
 
-## License
+---
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## 📜 License
+
+This project is licensed under the **MIT License**.
+See the [LICENSE](LICENSE) file for details.

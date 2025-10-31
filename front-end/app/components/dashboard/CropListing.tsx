@@ -3,17 +3,38 @@
 import { useState, useEffect } from "react";
 import CropCard from "./CropCard";
 
+interface Crop {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  location: string;
+  imageUrl: string;
+  description: string;
+  farmer: {
+    name: string;
+    avatarUrl: string;
+  };
+  farmerName?: string;
+}
+
+interface Farmer {
+  id: number;
+  fullName: string;
+  location: string;
+}
+
 export default function CropListing() {
-  const [crops, setCrops] = useState<any[]>([]);
+  const [crops, setCrops] = useState<Crop[]>([]);
 
   useEffect(() => {
     const allCropsData = JSON.parse(localStorage.getItem("crops") || "{}");
-    const allCrops = Object.entries(allCropsData).flatMap(([farmerId, farmerCrops]: [string, any]) => {
-      const farmers = JSON.parse(localStorage.getItem("farmers") || "[]");
-      const farmer = farmers.find((f: any) => f.id === parseInt(farmerId));
-      return farmerCrops.map((crop: any) => ({ ...crop, farmerName: farmer?.fullName, location: farmer?.location }));
+    const allCrops = Object.entries(allCropsData).flatMap(([farmerId, farmerCrops]: [string, unknown]) => {
+      const farmers: Farmer[] = JSON.parse(localStorage.getItem("farmers") || "[]");
+      const farmer = farmers.find((f) => f.id === parseInt(farmerId));
+      return (farmerCrops as Crop[]).map((crop) => ({ ...crop, farmerName: farmer?.fullName, location: farmer?.location }));
     });
-    setCrops(allCrops);
+    setCrops(allCrops as Crop[]);
   }, []);
 
   return (

@@ -9,6 +9,20 @@ import ProfileCard from "./ProfileCard";
 import StatsCard from "./StatsCard";
 import ConfirmationModal from "./ConfirmationModal";
 
+interface Crop {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  location: string;
+  imageUrl: string;
+  description: string;
+  farmer: {
+    name: string;
+    avatarUrl: string;
+  };
+}
+
 interface FarmerDashboardProps {
   farmer: {
     id: number;
@@ -22,11 +36,11 @@ interface FarmerDashboardProps {
 
 export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
   const [showModal, setShowModal] = useState(false);
-  const [crops, setCrops] = useState<any[]>([]);
+  const [crops, setCrops] = useState<Crop[]>([]);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
-  const [editingCrop, setEditingCrop] = useState<any | null>(null);
-  const [deletingCrop, setDeletingCrop] = useState<any | null>(null);
+  const [editingCrop, setEditingCrop] = useState<Crop | null>(null);
+  const [deletingCrop, setDeletingCrop] = useState<Crop | null>(null);
 
   useEffect(() => {
     try {
@@ -34,7 +48,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
       const farmerCrops = allCrops[farmer.id] || [];
       setCrops(farmerCrops);
 
-      const earnings = farmerCrops.reduce((acc: number, crop: any) => acc + crop.price * crop.quantity, 0);
+      const earnings = farmerCrops.reduce((acc: number, crop: Crop) => acc + crop.price * crop.quantity, 0);
       setTotalEarnings(earnings);
 
       setTotalOrders(Math.floor(Math.random() * 20) + 5);
@@ -43,17 +57,17 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
     }
   }, [farmer.id]);
 
-  const handleCropPosted = (newCrop: any) => {
+  const handleCropPosted = (newCrop: Omit<Crop, 'id'>) => {
     try {
       const allCrops = JSON.parse(localStorage.getItem("crops") || "{}");
       const farmerCrops = allCrops[farmer.id] || [];
       let updatedCrops;
 
       if (editingCrop) {
-        updatedCrops = farmerCrops.map((crop: any) => (crop.id === editingCrop.id ? newCrop : crop));
+        updatedCrops = farmerCrops.map((crop: Crop) => (crop.id === editingCrop.id ? newCrop : crop));
         toast.success("Crop updated successfully!");
       } else {
-        updatedCrops = [...farmerCrops, { ...newCrop, id: Date.now() }];
+        updatedCrops = [...farmerCrops, { ...newCrop, id: Date.now().toString() }];
         toast.success("Crop listed successfully!");
       }
 
@@ -61,7 +75,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
       localStorage.setItem("crops", JSON.stringify(allCrops));
       setCrops(updatedCrops);
 
-      const earnings = updatedCrops.reduce((acc: number, crop: any) => acc + crop.price * crop.quantity, 0);
+      const earnings = updatedCrops.reduce((acc: number, crop: Crop) => acc + crop.price * crop.quantity, 0);
       setTotalEarnings(earnings);
       setEditingCrop(null);
     } catch (error) {
@@ -69,16 +83,16 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
     }
   };
 
-  const handleDeleteCrop = (cropId: number) => {
+  const handleDeleteCrop = (cropId: string) => {
     try {
       const allCrops = JSON.parse(localStorage.getItem("crops") || "{}");
       const farmerCrops = allCrops[farmer.id] || [];
-      const updatedCrops = farmerCrops.filter((crop: any) => crop.id !== cropId);
+      const updatedCrops = farmerCrops.filter((crop: Crop) => crop.id !== cropId);
       allCrops[farmer.id] = updatedCrops;
       localStorage.setItem("crops", JSON.stringify(allCrops));
       setCrops(updatedCrops);
 
-      const earnings = updatedCrops.reduce((acc: number, crop: any) => acc + crop.price * crop.quantity, 0);
+      const earnings = updatedCrops.reduce((acc: number, crop: Crop) => acc + crop.price * crop.quantity, 0);
       setTotalEarnings(earnings);
       toast.success("Crop deleted successfully!");
     } catch (error) {
@@ -86,7 +100,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
     }
   };
 
-  const handleEditCrop = (crop: any) => {
+  const handleEditCrop = (crop: Crop) => {
     setEditingCrop(crop);
     setShowModal(true);
   };
@@ -96,7 +110,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
     setEditingCrop(null);
   };
 
-  const handleDeleteClick = (crop: any) => {
+  const handleDeleteClick = (crop: Crop) => {
     setDeletingCrop(crop);
   };
 
@@ -112,7 +126,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
   };
 
   return (
-    <div className="p-4 sm:p-8 mx-auto px-4 sm:px-6 bg-gradient-to-br from-green-50/50 via-emerald-50/50 to-teal-50/50 text-gray-800 min-h-screen">
+    <div className="p-4 sm:p-8 mx-auto mt-10 px-4 sm:px-6 bg-gradient-to-br from-green-50/50 via-emerald-50/50 to-teal-50/50 text-gray-800 min-h-screen">
       <div className="sticky backdrop-blur-md top-20 z-50 rounded-2xl flex flex-col sm:flex-row items-center justify-between bg-white/30 py-3 px-6 shadow-lg">
         <div className="text-center sm:text-left">
           <h1 className="text-2xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">Farmer Dashboard</h1>
@@ -147,7 +161,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
           <div className="text-center py-16 border-2 border-dashed border-gray-300 rounded-2xl bg-white/50">
             <Wheat className="w-16 h-16 mx-auto text-gray-400" />
             <h3 className="mt-4 text-xl font-bold text-gray-600">No crops listed yet.</h3>
-            <p className="mt-2 text-gray-500">Click the "List New Crop" button to get started.</p>
+            <p className="mt-2 text-gray-500">Click the &quot;List New Crop&quot; button to get started.</p>
           </div>
         )}
       </div>

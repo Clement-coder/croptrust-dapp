@@ -7,6 +7,27 @@ import ProfileCard from "./ProfileCard";
 import StatsCard from "./StatsCard";
 import { Wheat } from "lucide-react";
 
+interface Crop {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  location: string;
+  imageUrl: string;
+  description: string;
+  farmer: {
+    name: string;
+    avatarUrl: string;
+  };
+  farmerName: string;
+}
+
+interface Farmer {
+  id: number;
+  fullName: string;
+  location: string;
+}
+
 interface BuyerDashboardProps {
   buyer: {
     id: number;
@@ -18,20 +39,24 @@ interface BuyerDashboardProps {
 }
 
 export default function BuyerDashboard({ buyer }: BuyerDashboardProps) {
-  const [allCrops, setAllCrops] = useState<any[]>([]);
+  const [allCrops, setAllCrops] = useState<Crop[]>([]);
 
   useEffect(() => {
     try {
       const cropsByFarmer = JSON.parse(localStorage.getItem("crops") || "{}");
-      const allCropsData = Object.values(cropsByFarmer).flat();
-      setAllCrops(allCropsData);
+      const farmers: Farmer[] = JSON.parse(localStorage.getItem("farmers") || "[]");
+      const allCropsData = Object.entries(cropsByFarmer).flatMap(([farmerId, farmerCrops]: [string, unknown]) => {
+        const farmer = farmers.find((f) => f.id === parseInt(farmerId));
+        return (farmerCrops as Crop[]).map((crop) => ({ ...crop, farmerName: farmer?.fullName || 'Unknown Farmer', location: farmer?.location || 'Unknown Location' }));
+      });
+      setAllCrops(allCropsData as Crop[]);
     } catch (error) {
       toast.error("Failed to load marketplace data.");
     }
   }, []);
 
   return (
-    <div className="p-4 sm:p-8 mx-auto px-4 sm:px-6 bg-gradient-to-br from-blue-50/50 via-sky-50/50 to-cyan-50/50 text-gray-800 min-h-screen">
+    <div className="p-4 sm:p-8 mt-10 mx-auto px-4 sm:px-6 bg-gradient-to-br from-blue-50/50 via-sky-50/50 to-cyan-50/50 text-gray-800 min-h-screen">
       <div className="sticky backdrop-blur-md top-20 z-50 rounded-2xl flex flex-col sm:flex-row items-center justify-between bg-white/30 py-3 px-6 shadow-lg">
         <div className="text-center sm:text-left">
           <h1 className="text-2xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky-600">Marketplace</h1>

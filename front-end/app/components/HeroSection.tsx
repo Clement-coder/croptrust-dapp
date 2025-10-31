@@ -2,7 +2,6 @@ import React from 'react';
 import { ArrowRight, Shield, DollarSign, Wheat, Star, CheckCircle, ArrowLeftRight, Zap } from 'lucide-react';
 import styles from './HeroSection.module.css';
 import Link from 'next/link';
-import RoleSelectionButton from './registration/RoleSelectionButton';
 
 function HeroSection() {
   return (
@@ -53,7 +52,25 @@ function HeroSection() {
               Farmers get fair prices. Buyers get transparent, fresh produce straight from the source.
             </p>
 
-            <RoleSelectionButton />
+            <Link href="/dashboard">
+              <button className="relative w-full cursor-pointer overflow-hidden group">
+                {/* Main Button */}
+                <div className={`relative z-10 w-full px-10 py-4 bg-gradient-to-br from-green-500 via-emerald-500 to-green-600 
+                  rounded-xl flex items-center justify-center gap-3 text-white font-bold tracking-wide 
+                  shadow-xl transition-all duration-500 transform border-2 border-green-400/30
+                `}>
+                  {/* Button text */}
+                  <span className="relative z-10 text-lg font-bold tracking-wider drop-shadow-lg">
+                    GET STARTED
+                  </span>
+                  
+                  {/* Animated Arrow */}
+                  <div className="relative">
+                    <ArrowRight className={`w-6 h-6 text-white transition-all duration-300 drop-shadow-lg`} />
+                  </div>
+                </div>
+              </button>
+            </Link>
 
 
             {/* CTA Style Box */}

@@ -3,10 +3,24 @@
 import { useState, useEffect } from "react";
 import { Wheat, X, DollarSign, Package, Image as ImageIcon } from "lucide-react";
 
+interface Crop {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  location: string;
+  imageUrl: string;
+  description: string;
+  farmer: {
+    name: string;
+    avatarUrl: string;
+  };
+}
+
 interface PostCropModalProps {
   onClose: () => void;
-  onCropPosted: (newCrop: any) => void;
-  crop?: any;
+  onCropPosted: (newCrop: Omit<Crop, 'id'>) => void;
+  crop?: Crop;
 }
 
 export default function PostCropModal({ onClose, onCropPosted, crop }: PostCropModalProps) {
@@ -21,7 +35,7 @@ export default function PostCropModal({ onClose, onCropPosted, crop }: PostCropM
       setCropName(crop.name);
       setQuantity(crop.quantity.toString());
       setPrice(crop.price.toString());
-      setImage(crop.image || null);
+      setImage(crop.imageUrl || null);
     }
   }, [crop]);
 
@@ -49,7 +63,7 @@ export default function PostCropModal({ onClose, onCropPosted, crop }: PostCropM
       return;
     }
 
-    const newCrop = { ...(crop || {}), name: cropName, quantity: parseInt(quantity), price: parseInt(price), image };
+    const newCrop = { ...(crop || {}), name: cropName, quantity: parseInt(quantity), price: parseInt(price), imageUrl: image, description: '' };
     onCropPosted(newCrop);
     onClose();
   };

@@ -1,4 +1,3 @@
-
 'use client';
 
 import { ArrowLeftRight, User, MessageSquare, Heart, Clock, ArrowRight, Star, Twitter, Send, Linkedin, Sparkles, TrendingUp, Shield, Zap, Upload, Search, Lock, CheckCircle, Users, DollarSign, Leaf, Smartphone, Globe, Award, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
@@ -58,7 +57,7 @@ const HomeComponents = () => {
           background-size: 400% 400%;
           animation: gradient-shift 4s ease infinite;
         }
-        .group:hover .group-hover\\:animate-bounce { animation: bounce-slow 0.6s ease-in-out; }
+        .group:hover .group-hover\:animate-bounce { animation: bounce-slow 0.6s ease-in-out; }
       `}</style>
 
       {/* About Section */}
@@ -110,14 +109,13 @@ const HomeComponents = () => {
             {/* Right side - Content */}
             <div className="space-y-8 animate-slide-up" style={{animationDelay: '0.2s'}}>
               <div>
-                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                  Advancing innovative farming techniques
-                </h2>
-                <p className="text-lg text-gray-600 leading-relaxed mb-8">
-                  Welcome to Africa's premier Web3 agricultural marketplace. Our innovative platform connects farmers directly to buyers through sustainable farming practices and cutting-edge blockchain technology to optimize crop yields and fair pricing.
-                </p>
-              </div>
-
+                                  <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+                                    Advancing innovative farming techniques
+                                  </h2>
+                                  <p className="text-lg text-gray-600 leading-relaxed mb-8">
+                                    Welcome to Africa&apos;s premier Web3 agricultural marketplace. Our innovative platform connects farmers directly to buyers through sustainable farming practices and cutting-edge blockchain technology to optimize crop yields and fair pricing.
+                                  </p>
+                                </div>
               {/* Features Grid */}
               <div className="grid grid-cols-2 gap-6">
                 {/* Smart Farming */}
@@ -325,7 +323,7 @@ const HomeComponents = () => {
                   </div>
                   
                   <h3 className="text-xl font-bold text-gray-900 mb-3">Buyers Discover</h3>
-                  <p className="text-gray-600 leading-relaxed">Smart matching algorithms connect your produce with verified buyers seeking exactly what you're offering.</p>
+                  <p className="text-gray-600 leading-relaxed">Smart matching algorithms connect your produce with verified buyers seeking exactly what you&apos;re offering.</p>
                   
                   <div className="absolute bottom-4 right-4 w-8 h-8 bg-blue-100 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-float-1"></div>
                 </div>
@@ -471,7 +469,7 @@ const HomeComponents = () => {
                   </div>
                   
                   <p className="text-gray-600 mb-6 italic leading-relaxed">
-                    "CropTrust changed my life! I now get fair prices for my crops and receive payments instantly. No more waiting for middlemen."
+                    &quot;CropTrust changed my life! I now get fair prices for my crops and receive payments instantly. No more waiting for middlemen.&quot;
                   </p>
                   
                   <div className="flex items-center">
@@ -511,7 +509,7 @@ const HomeComponents = () => {
                   </div>
                   
                   <p className="text-gray-600 mb-6 italic leading-relaxed">
-                    "The transparency is incredible. I know exactly where my produce comes from and can trust the quality every time."
+                    &quot;The transparency is incredible. I know exactly where my produce comes from and can trust the quality every time.&quot;
                   </p>
                   
                   <div className="flex items-center">
@@ -551,7 +549,7 @@ const HomeComponents = () => {
                   </div>
                   
                   <p className="text-gray-600 mb-6 italic leading-relaxed">
-                    "Smart contracts give me peace of mind. I know my payment is secure and will be released automatically upon delivery."
+                    &quot;Smart contracts give me peace of mind. I know my payment is secure and will be released automatically upon delivery.&quot;
                   </p>
                   
                   <div className="flex items-center">
@@ -589,13 +587,13 @@ const HomeComponents = () => {
               <div>
                 <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium mb-6 animate-bounce-slow">
                   <Mail className="w-4 h-4" />
-                  Let's Connect
+                  Let&apos;s Connect
                 </div>
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                   Get in <span className="bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">Touch</span>
                 </h2>
                 <p className="text-xl text-gray-600 leading-relaxed">
-                  Ready to revolutionize your farming experience? Let's discuss how CropTrust can transform your agricultural journey.
+                  Ready to revolutionize your farming experience? Let&apos;s discuss how CropTrust can transform your agricultural journey.
                 </p>
               </div>
 

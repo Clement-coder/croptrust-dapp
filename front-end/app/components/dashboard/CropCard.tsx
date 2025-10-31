@@ -21,7 +21,7 @@ export default function CropCard({ crop, action, onDelete, onEdit }: CropCardPro
   const quantity = crop.quantity || 0;
 
   return (
-    <div className="relative group overflow-hidden rounded-2xl bg-gradient-to-br from-white/90 to-gray-100/90 backdrop-blur-xl border-2 border-white/30 shadow-lg hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 ease-out hover:-translate-y-2">
+    <div className="relative g from-white/90 to-gray-100/90 backdrop-blur-xl border-2 border-white/30 shadow-lg hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 ease-out hover:-translate-y-2">
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-green-400/10 via-transparent to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       <div className="relative p-4 sm:p-6">
         <div className="relative">
