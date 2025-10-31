@@ -57,17 +57,24 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
     }
   }, [farmer.id]);
 
-  const handleCropPosted = (newCrop: Omit<Crop, 'id'>) => {
+  const handleCropPosted = (newCropData: Pick<Crop, 'name' | 'quantity' | 'price' | 'imageUrl' | 'description'>) => {
     try {
       const allCrops = JSON.parse(localStorage.getItem("crops") || "{}");
       const farmerCrops = allCrops[farmer.id] || [];
       let updatedCrops;
 
       if (editingCrop) {
-        updatedCrops = farmerCrops.map((crop: Crop) => (crop.id === editingCrop.id ? newCrop : crop));
+        const updatedCrop = { ...editingCrop, ...newCropData };
+        updatedCrops = farmerCrops.map((crop: Crop) => (crop.id === editingCrop.id ? updatedCrop : crop));
         toast.success("Crop updated successfully!");
       } else {
-        updatedCrops = [...farmerCrops, { ...newCrop, id: Date.now().toString() }];
+        const fullNewCrop = {
+          ...newCropData,
+          id: Date.now().toString(),
+          location: farmer.location,
+          farmer: { name: farmer.fullName, avatarUrl: "" },
+        };
+        updatedCrops = [...farmerCrops, fullNewCrop];
         toast.success("Crop listed successfully!");
       }
 

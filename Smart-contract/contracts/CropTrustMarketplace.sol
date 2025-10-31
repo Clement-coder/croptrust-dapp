@@ -31,7 +31,6 @@ contract CropTrustMarketplace {
         require(found, "Listing not found or inactive");
         require(_amount == selected.price, "Incorrect payment");
 
-        // Create escrow
         escrow.createEscrow(_farmer, _listingId, _amount);
         emit Events.PurchaseInitiated(msg.sender, _farmer, _listingId, _amount);
     }

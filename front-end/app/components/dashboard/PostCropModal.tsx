@@ -19,7 +19,7 @@ interface Crop {
 
 interface PostCropModalProps {
   onClose: () => void;
-  onCropPosted: (newCrop: Omit<Crop, 'id'>) => void;
+  onCropPosted: (newCrop: Pick<Crop, 'name' | 'quantity' | 'price' | 'imageUrl' | 'description'>) => void;
   crop?: Crop;
 }
 
@@ -63,7 +63,7 @@ export default function PostCropModal({ onClose, onCropPosted, crop }: PostCropM
       return;
     }
 
-    const newCrop = { ...(crop || {}), name: cropName, quantity: parseInt(quantity), price: parseInt(price), imageUrl: image, description: '' };
+    const newCrop = { name: cropName, quantity: parseInt(quantity), price: parseInt(price), imageUrl: image!, description: '' };
     onCropPosted(newCrop);
     onClose();
   };
