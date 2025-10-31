@@ -3,19 +3,22 @@
 import { useState, useEffect } from "react";
 import CropCard from "./CropCard";
 
-interface Crop {
+interface StoredCrop {
   id: string;
   name: string;
   price: number;
   quantity: number;
-  location: string;
   imageUrl: string;
   description: string;
   farmer: {
     name: string;
     avatarUrl: string;
   };
-  farmerName?: string;
+}
+
+interface Crop extends StoredCrop {
+  location: string;
+  farmerName: string;
 }
 
 interface Farmer {
@@ -32,7 +35,14 @@ export default function CropListing() {
     const allCrops = Object.entries(allCropsData).flatMap(([farmerId, farmerCrops]: [string, unknown]) => {
       const farmers: Farmer[] = JSON.parse(localStorage.getItem("farmers") || "[]");
       const farmer = farmers.find((f) => f.id === parseInt(farmerId));
-      return (farmerCrops as Crop[]).map((crop) => ({ ...crop, farmerName: farmer?.fullName, location: farmer?.location }));
+      if (!farmer) {
+        return [];
+      }
+      return (farmerCrops as StoredCrop[]).map((crop) => ({
+        ...crop,
+        farmerName: farmer.fullName,
+        location: farmer.location,
+      }));
     });
     setCrops(allCrops as Crop[]);
   }, []);

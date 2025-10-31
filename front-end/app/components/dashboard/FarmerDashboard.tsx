@@ -39,7 +39,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
   const [crops, setCrops] = useState<Crop[]>([]);
   const [totalEarnings, setTotalEarnings] = useState(0);
   const [totalOrders, setTotalOrders] = useState(0);
-  const [editingCrop, setEditingCrop] = useState<Crop | null>(null);
+  const [editingCrop, setEditingCrop] = useState<Crop>();
   const [deletingCrop, setDeletingCrop] = useState<Crop | null>(null);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
 
       const earnings = updatedCrops.reduce((acc: number, crop: Crop) => acc + crop.price * crop.quantity, 0);
       setTotalEarnings(earnings);
-      setEditingCrop(null);
+      setEditingCrop(undefined);
     } catch (error) {
       toast.error(editingCrop ? "Failed to update crop." : "Failed to list crop.");
     }
@@ -107,7 +107,7 @@ export default function FarmerDashboard({ farmer }: FarmerDashboardProps) {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setEditingCrop(null);
+    setEditingCrop(undefined);
   };
 
   const handleDeleteClick = (crop: Crop) => {
